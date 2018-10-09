@@ -27,13 +27,9 @@ def unZip(some_file,some_output):
     """
     Unzip some_file using the gzip library and write to some_output.
     """
-
-    f = gzip.open(some_file,'r')
-    g = open(some_output,'w')
-    g.writelines(f.readlines())
-    f.close()
-    g.close()
-
+    with gzip.open(some_file, 'r') as f:
+        with open(some_output, 'w') as g:
+            g.writelines(map(lambda x: x.decode(), f.readlines()))
     os.remove(some_file)
 
 def pdbDownload(file_list,hostname=HOSTNAME,directory=DIRECTORY,prefix=PREFIX,

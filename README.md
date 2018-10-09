@@ -15,8 +15,6 @@ pdbTools is a set of command line [python](http://www.python.org) scripts that m
 
 Most of the scripts will run "out of the box" using a python interpreter.  The command line parser is designed to be flexible.  It will take an arbitrarily long list of pdb files, pdb ids, text files with pdb ids, or some mixture of all three.  If the pdb file or id is not in the working directory, scripts will attempt to download the pdb file from [RCSB](http://www.rcsb.org/).  Depending on the type of operation being done, a program will either write output files in the working directory or will print to stdout.  All structure outputs are written in standard pdb format.  All data outputs are in fixed-width column format.  They were designed to be read by the statistics package [R](http://cran.r-project.org/); however, they should be easily parsed by other graphing programs.
 
-*Note:* These scripts are only compatible with Python version 2.4-2.7.
-
 ## Installation
 
 Install the development version by cloning this repo and running `pip`:

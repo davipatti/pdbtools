@@ -4,6 +4,10 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import division
+from __future__ import print_function
+from builtins import range
+from past.utils import old_div
 __description__ = \
 """
 pdb_contact.py
@@ -43,7 +47,7 @@ def main():
     # If we are calculating a difference map, calculate this first.
     if options.difference != None:
         if not os.path.isfile(options.difference):
-            print "\"%s\" is not a file!" % options.difference
+            print("\"%s\" is not a file!" % options.difference)
             sys.exit()
 
         f = open(options.difference,'r')
@@ -64,8 +68,8 @@ def main():
         # Make sure the difference and main pdbs have the same number of atoms
         if options.difference != None:
             if len(dist) != len(to_compare):
-                print "\"%s\" and \"%s\" do not have same number of atoms!" % \
-                    (pdb_file,options.difference)
+                print("\"%s\" and \"%s\" do not have same number of atoms!" % \
+                    (pdb_file,options.difference))
                 sys.exit()
 
         # Write output
@@ -84,9 +88,9 @@ def main():
 
                 if options.difference != None:
                     d = dist[i][j] - to_compare[i][j]
-                    mean = (dist[i][j] + to_compare[i][j])/2.
+                    mean = old_div((dist[i][j] + to_compare[i][j]),2.)
                     if mean != 0:
-                        d_m = d/mean
+                        d_m = old_div(d,mean)
                     else:
                         d_m = 0
 

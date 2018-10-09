@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
 __author__ = "Michael J. Harms"
 __date__ = "070709"
 __description__ = \
@@ -71,7 +72,7 @@ def main():
         # dump output to stdout
         out = ["%10i%10.3F\n" % (i,d) for i, d in enumerate(dist)]
         out.insert(0,"%10s%10s\n" % (" ","dist"))
-        print "".join(out)
+        print("".join(out))
 
 # Parse command line if called from command line
 if __name__ == "__main__":

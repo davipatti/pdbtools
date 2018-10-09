@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
 __description__ = \
 """
 pdb_ligand.py
@@ -46,7 +47,7 @@ def main():
 
     out = ["%i\t%s\n" % (i,l) for i, l in enumerate(out)]
 
-    print "".join(out)
+    print("".join(out))
 
 
 # If run from command line...

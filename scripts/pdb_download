@@ -9,6 +9,7 @@ pdb_download.py
 
 Download a pdb or set of pdb files and uncompress them.
 """
+from __future__ import print_function
 
 __author__ = "Michael J. Harms"
 __date__ = "070521"
@@ -26,7 +27,7 @@ def main():
     try:
         file_input = sys.argv[1:]
     except IndexError:
-        print __usage__
+        print(__usage__)
         sys.exit()
 
     pdb_list = []

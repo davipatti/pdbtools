@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
 __description__ =\
 """
 pdb_offset.py
@@ -43,7 +44,7 @@ def main():
     # If it is a single file, dump to command line.  If it is a directory,
     # write each file to r%s % file.
     if len(out_files) == 1:
-        print out_files[0]
+        print(out_files[0])
     else:
         for i, f in enumerate(file_list):
             out_name = list(os.path.split(f))

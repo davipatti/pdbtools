@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
 __description__ = \
 """
 pdb_contacting-residues.py
@@ -76,4 +77,4 @@ def main():
 if __name__ == "__main__":
 
     out = main()
-    print "".join(out)
+    print("".join(out))

@@ -4,6 +4,8 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
+from builtins import range
 __description__ =\
 """
 pdb_neighbors.py
@@ -83,7 +85,7 @@ def main():
     out.insert(0,"# Dist cutoff: %.2F\n# Seq cutoff:  %i\n" %
                (options.dist,options.seq))
 
-    print "".join(out)
+    print("".join(out))
 
 if __name__ == "__main__":
     main()

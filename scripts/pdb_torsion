@@ -4,6 +4,8 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
+from builtins import range
 __description__ = \
 """
 Determines the dihedral angles (phi,psi) for each residue in a protein.
@@ -47,7 +49,7 @@ def main():
 
     header = "%10s%30s%4s%8s%10s%10s\n" % (" ","pdb","aa","res","phi","psi")
     out.insert(0,header)
-    print "".join(out)
+    print("".join(out))
 
 
 if __name__ == "__main__":

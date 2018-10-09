@@ -7,6 +7,7 @@
 # Thanks to Blatter Markus for adding the capability to deal with HETATM and
 # NMR models
 
+from __future__ import print_function
 __description__ = \
 """
 pdb_atom_renumber.py
@@ -44,7 +45,7 @@ def main():
 
         out = atom_renumber.pdbAtomRenumber(pdb,options.renumber_het)
         if len(file_list) == 1:
-            print "".join(out)
+            print("".join(out))
         else:
             out_file = "%s_renum.pdb" % pdb_file[:-4]
             g = open(out_file,'w')

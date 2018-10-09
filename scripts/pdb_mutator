@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
 __description__ = \
 """
 pdb_mutator.py
@@ -75,7 +76,7 @@ def main():
         pdb = f.readlines()
         f.close()
 
-        print "Loading %s" % file
+        print("Loading %s" % file)
         pdb_id = file[:-4]
         pdb, mutation_string = mutator.pdbMutator(pdb,residue,mutation,chain,
                                           run_charmm)
@@ -85,7 +86,7 @@ def main():
         g.writelines(pdb)
         g.close()
 
-        print "Mutated pdb written to %s" % out_file
+        print("Mutated pdb written to %s" % out_file)
 
 if __name__ == "__main__":
     main()

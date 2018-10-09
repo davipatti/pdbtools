@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
 __description__ = \
 """
 pdb_seq.py
@@ -52,7 +53,7 @@ def main():
 
         sequence = seq.pdbSeq2Fasta(pdb,pdb_id,options.chain,options.atomseq)
 
-        print sequence
+        print(sequence)
 
 
 

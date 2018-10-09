@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
 __description__ = \
 """
 pdb_water-contact.py
@@ -42,11 +43,11 @@ def main():
 
         neighbors = watercontact.pdbWaterContact(pdb,options.probe)
 
-        residues = neighbors.keys()
+        residues = list(neighbors.keys())
         residues.sort()
 
         for r in residues:
-            print "\"%5s\"%10i" % (r,len(neighbors[r]))
+            print("\"%5s\"%10i" % (r,len(neighbors[r])))
 
 # If run from command line...
 if __name__ == "__main__":

@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
 __description__ = \
 """
 pdb_residue-renumber.py
@@ -76,7 +77,7 @@ def main():
         g.close()
 
         if options.align_out:
-            print "Residue alignment written out."
+            print("Residue alignment written out.")
 
             alignment.insert(0,"#%s" % pdb_out[0])
             g = open("%s_res-algn.out" % short_pdb,'w')

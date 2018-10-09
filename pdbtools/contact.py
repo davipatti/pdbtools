@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from builtins import range
 __description__ = \
 """
 pdb_contacting-residues.py
@@ -42,7 +43,7 @@ def pdbContacting(pdb,target,cutoff,target_type="resname"):
                 contacts.append(a[0][5:].strip())
 
         # Grab only unique contacts
-        contacts = dict([(c,()) for c in contacts]).keys()
+        contacts = list(dict([(c,()) for c in contacts]).keys())
         out.append("%s\t%s\n" % (t[0],("\t".join(contacts))))
 
     return out 

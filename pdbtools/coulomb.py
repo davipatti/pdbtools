@@ -4,6 +4,9 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import division
+from builtins import range
+from past.utils import old_div
 __description__ = \
 """
 pdb_coulomb.py
@@ -33,7 +36,7 @@ def readPDB(pdb_file):
 
     # Grab only ATOM entries that are titratable
     pdb = [l for l in pdb if l[0:4] == "ATOM" and
-                             l[17:20] in TITR_ATOM.keys() and
+                             l[17:20] in list(TITR_ATOM.keys()) and
                              l[13:16] == TITR_ATOM[l[17:20]]]
 
     # Initalize lists to hold coordinates, pkas, and charge
@@ -60,7 +63,7 @@ def hendersonHasselbach(pKa,charge,pH):
     pH value.
     """
 
-    return charge/(1 + 10**(charge*(pH-pKa)))
+    return old_div(charge,(1 + 10**(charge*(pH-pKa))))
 
 
 def pdbCoulomb(coord,pKa,charge,dielec_const,ionic_str,pH,temperature):
@@ -70,10 +73,10 @@ def pdbCoulomb(coord,pKa,charge,dielec_const,ionic_str,pH,temperature):
     ionic strength.
     """
 
-    ionic_str = ionic_str/1000
+    ionic_str = old_div(ionic_str,1000)
 
     # Initialize variables
-    kappa = 50.29*sqrt(ionic_str/(dielec_const*temperature))
+    kappa = 50.29*sqrt(old_div(ionic_str,(dielec_const*temperature)))
     num_groups = len(coord)
     energy = 0.
 

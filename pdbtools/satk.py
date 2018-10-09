@@ -4,6 +4,12 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import division
+from __future__ import print_function
+from builtins import str
+from builtins import zip
+from builtins import range
+from past.utils import old_div
 __description__ = \
 """
 pdb_satk.py
@@ -73,7 +79,7 @@ def runMkwij(wij_name,wij_id='nothing',Dint=4,Dsolv=78.5,T=298.16,a=20,b=18,g=0,
 
     # Create wij input file
     if os.path.isfile(wij_name):
-        print wij_name,'deleted.'
+        print(wij_name,'deleted.')
         os.remove(wij_name)
 
     out = []
@@ -126,9 +132,9 @@ def runSetup(prefix):
     found_files = ["%s%s" % (prefix,ext) for ext in ext_check
                    if os.path.isfile("%s%s" % (prefix,ext))]
     if found_files != []:
-        print 'The following files were deleted:'
+        print('The following files were deleted:')
         for output_file in found_files:
-            print '\t', output_file
+            print('\t', output_file)
             os.remove(output_file)
 
     crdfrmt_bin = os.path.join(satk_path,'crdfrmt.out')
@@ -164,9 +170,9 @@ def createSin(prefix,cutoff=3.):
 
     # Find distance to nearest atom for each atom
     num_atoms = len(coord)
-    nearest = [100. for i in xrange(num_atoms)]
-    for i in xrange(num_atoms):
-        for j in xrange(num_atoms):
+    nearest = [100. for i in range(num_atoms)]
+    for i in range(num_atoms):
+        for j in range(num_atoms):
             if i == j or residue[i] == residue[j]:
                 continue
             d = sqrt(sum([(coord[i][k]-coord[j][k])**2 for k in [0,1,2]]))
@@ -188,7 +194,7 @@ def createSin(prefix,cutoff=3.):
             elif nearest[i+1] < cutoff:
                 sin.append(elc[i+1])
             else:
-                sort_list = zip(inverse_sa[i:i+2],[i,i+1])
+                sort_list = list(zip(inverse_sa[i:i+2],[i,i+1]))
                 sort_list.sort()
                 sin.append(elc[sort_list[0][1]])
             i += 2
@@ -221,7 +227,7 @@ def runSatkelni(prefix,wij_table,high_pH=20,low_pH=0,interval=0.25,
         raise SATKError(err)
 
     # Make sure there are < 100 pH steps (to avoid fortran array overrun)
-    num_pH = (high_pH - low_pH)/interval
+    num_pH = old_div((high_pH - low_pH),interval)
     if num_pH > 100:
         err = "Too many pH steps!  (You can only have 100 steps)."
         raise SATKError(err)
@@ -234,9 +240,9 @@ def runSatkelni(prefix,wij_table,high_pH=20,low_pH=0,interval=0.25,
         if os.access(output_file,os.R_OK) == 1:
             found_files.append(output_file)
     if found_files != []:
-        print 'The following files were deleted:'
+        print('The following files were deleted:')
         for output_file in found_files:
-            print '\t', output_file
+            print('\t', output_file)
             os.remove(output_file)
 
     # Count the number of atoms in the .sin file
@@ -278,7 +284,7 @@ def runSatkelni(prefix,wij_table,high_pH=20,low_pH=0,interval=0.25,
                      "%s.pov" % prefix]
     runBin(satkelni_bin,satkelni_args)
 
-    print 'satkelni run complete for', prefix
+    print('satkelni run complete for', prefix)
 
 def createPrettyOutput(prefix):
     """
@@ -334,13 +340,13 @@ def createPrettyOutput(prefix):
 
         titr_dict[salt_value] = titr[:]
 
-    salts = pka_dict.keys()
+    salts = list(pka_dict.keys())
     salts.sort()
 
     # Write out pKa values
     out = header[:]
     out.append("%10s%12s%10s%10s\n" % (" ","residue","ionic_str","pKa"))
-    residues = pka_dict[salts[0]].keys()
+    residues = list(pka_dict[salts[0]].keys())
     residues.sort()
     counter = 0
     for r in residues:
@@ -524,7 +530,7 @@ def GetIndivTitration(prefix,residtype,residnum):
     g.write("".join(out))
     g.close()
 
-    print "%s%s%s%s%s" % (prefix,'_',residtype,residnum,'.indiv'), 'written'
+    print("%s%s%s%s%s" % (prefix,'_',residtype,residnum,'.indiv'), 'written')
 
 
 def GetPHTitration(prefix):
@@ -602,4 +608,4 @@ def GetPHTitration(prefix):
     g.write("".join(out))
     g.close()
 
-    print outputfile, 'written.' 
+    print(outputfile, 'written.') 

@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from builtins import range
 __description__ = \
 """
 Determines the dihedral angles (phi,psi) for each residue in a protein.
@@ -60,7 +61,7 @@ def pdbTorsion(pdb):
 
                 # Now record N, C, and CA entries.  Take only a unique one from
                 # each residue to deal with multiple conformations etc.
-                if not resid_contents.has_key(line[13:16]):
+                if line[13:16] not in resid_contents:
                     resid_contents[line[13:16]] = line
                 else:
                     err = "Warning: %s has repeated atoms!\n" % current_residue

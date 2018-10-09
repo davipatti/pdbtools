@@ -5,6 +5,9 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
+from builtins import map
+from builtins import range
 __description__ = \
 """
 pdb_centerasu.py
@@ -20,8 +23,8 @@ import sys
 try:
     from numpy import array, linalg, dot, mean, squeeze
 except ImportError:
-    print "numpy package is required for this program!"
-    print "(http://numpy.scipy.org/)"
+    print("numpy package is required for this program!")
+    print("(http://numpy.scipy.org/)")
     sys.exit()
 
 class PdbCenterAsuError(Exception):
@@ -46,7 +49,7 @@ def pdbCenterasu(pdb, write_coord =False):
     fmx = []
     for line in pdb:
         if line.startswith('SCALE'):
-            data = map(float, line[6:].split()[:-1])
+            data = list(map(float, line[6:].split()[:-1]))
             fmx.append(data)
 
     if len(fmx) == 0:

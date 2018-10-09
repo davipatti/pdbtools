@@ -2,6 +2,8 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from builtins import range
+from builtins import object
 __description__ = \
 """
 pdbObject.py
@@ -27,7 +29,7 @@ class PdbContainerError(Exception):
     pass
 
 
-class Fragment:
+class Fragment(object):
     """
     Holds a continuous fragment of amino acids and whether or not the fragment
     should have termini.
@@ -65,7 +67,7 @@ class Fragment:
         else:
             return "".join(self.atom_lines)
 
-class Chain:
+class Chain(object):
     """
     Hold a single molecule chain (as a set of fragments).
     """
@@ -218,7 +220,7 @@ class Chain:
             return "".join(out)
 
 
-class Structure:
+class Structure(object):
     """
     Class to hold a pdb file (broken into chains, then into fragments).
     """

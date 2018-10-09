@@ -4,6 +4,9 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import division
+from builtins import range
+from past.utils import old_div
 __description__ = \
 """
 pdb_seq.py
@@ -37,7 +40,7 @@ def pdbSeq(pdb,use_atoms=False):
     if len(seq) != 0 and not use_atoms:
         seq_type = "SEQRES"
         chain_dict = dict([(l[11],[]) for l in seq])
-        for c in chain_dict.keys():
+        for c in list(chain_dict.keys()):
             chain_seq = [l[19:70].split() for l in seq if l[11] == c]
             for x in chain_seq:
                 chain_dict[c].extend(x)
@@ -76,7 +79,7 @@ def pdbSeq(pdb,use_atoms=False):
                 atoms.append(l)
 
         chain_dict = dict([(l[21],[]) for l in atoms])
-        for c in chain_dict.keys():
+        for c in list(chain_dict.keys()):
             chain_dict[c] = [l[17:20] for l in atoms if l[21] == c]
 
     return chain_dict, seq_type
@@ -97,9 +100,9 @@ def convertModifiedAA(chain_dict,pdb):
     mod_dict = dict([(l[12:15],l[24:27]) for l in modres])
 
     # Replace all entries in chain_dict with their unmodified counterparts.
-    for c in chain_dict.keys():
+    for c in list(chain_dict.keys()):
         for i, a in enumerate(chain_dict[c]):
-            if mod_dict.has_key(a):
+            if a in mod_dict:
                 chain_dict[c][i] = mod_dict[a]
 
     return chain_dict
@@ -118,10 +121,10 @@ def pdbSeq2Fasta(pdb,pdb_id="",chain="all",use_atoms=False):
 
     # Determine which chains are being written out
     if chain == "all":
-        chains_to_write = chain_dict.keys()
+        chains_to_write = list(chain_dict.keys())
         chains_to_write.sort()
     else:
-        if chain in chain_dict.keys():
+        if chain in list(chain_dict.keys()):
             chains_to_write = [chain]
         else:
             err = "Chain \"%s\" not in pdb!" % chain
@@ -141,7 +144,7 @@ def pdbSeq2Fasta(pdb,pdb_id="",chain="all",use_atoms=False):
 
         # Write output in lines 80 characters long
         seq_length = len(chain_dict[c])
-        num_lines = seq_length / 80
+        num_lines = old_div(seq_length, 80)
 
         for i in range(num_lines+1):
             out.append("".join([aa for aa in chain_dict[c][80*i:80*(i+1)]]))

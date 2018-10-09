@@ -1,7 +1,10 @@
+from __future__ import division
 # Copyright 2007, Michael J. Harms
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from builtins import range
+from past.utils import old_div
 __description__ = \
 """
 geometry.py
@@ -36,9 +39,9 @@ def calcDistances(coord):
 
     num_points = len(coord)
     d = [[0. for j in range(num_points)] for i in range(num_points)]
-    for i in xrange(num_points):
+    for i in range(num_points):
         d[i][i] = 0.
-        for j in xrange(i+1,num_points):
+        for j in range(i+1,num_points):
             d[i][j] = dist(coord[i],coord[j])
             d[j][i] = d[i][j]
 
@@ -72,7 +75,7 @@ def findAngle(u,v):
     mag_u = sqrt(u[0]**2 + u[1]**2 + u[2]**2)
     mag_v = sqrt(v[0]**2 + v[1]**2 + v[2]**2)
 
-    return 180/pi * acos(dotProduct(u,v)/(mag_u*mag_v))
+    return 180/pi * acos(old_div(dotProduct(u,v),(mag_u*mag_v)))
 
 def genRotMatrix(axis,theta):
     """
@@ -82,9 +85,9 @@ def genRotMatrix(axis,theta):
     matrix = [[0. for j in range(3)] for i in range(3)]
 
     axis_length = sqrt((axis[0]**2 + axis[1]**2 + axis[2]**2))
-    xNorm = axis[0]/axis_length
-    yNorm = axis[1]/axis_length
-    zNorm = axis[2]/axis_length
+    xNorm = old_div(axis[0],axis_length)
+    yNorm = old_div(axis[1],axis_length)
+    zNorm = old_div(axis[2],axis_length)
 
     sin_theta = sin(theta)
     cos_theta = cos(theta)
@@ -136,7 +139,7 @@ def calcGlyCbeta(Ncoord,CAcoord,COcoord):
         CA_CO_vector.append(COcoord[i] - CAcoord[i])
         CA_N_vector.append(Ncoord[i] - CAcoord[i])
 
-    rotation_amount = 240*(pi/180.)
+    rotation_amount = 240*(old_div(pi,180.))
 
     rotated = arbRot(CA_CO_vector, CA_N_vector, rotation_amount)
 
@@ -163,7 +166,7 @@ def calcHXT(C_coord,O_coord,OXT_coord):
 
     HXT_coord = [0.,0.,0.]
     for i in range(3):
-        vector_3[i] = vector_3[i]/dv3
+        vector_3[i] = old_div(vector_3[i],dv3)
         HXT_coord[i] = OXT_coord[i] + vector_3[i]
 
     return HXT_coord
@@ -181,7 +184,7 @@ def calcHG(CB_coord,SG_coord):
 
     HG_coord = [0.,0.,0.]
     for i in range(3):
-        vector_1[i] = vector_1[i]/dv3
+        vector_1[i] = old_div(vector_1[i],dv3)
         HG_coord[i] = SG_coord[i] + 1.08*vector_1[i]
 
     return HG_coord

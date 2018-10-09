@@ -4,6 +4,11 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
+from builtins import range
+from past.utils import old_div
 __description__ = \
 """
 pdb_centermass.py
@@ -17,7 +22,7 @@ __author__ = "Michael J. Harms"
 __date__ = "061109"
 
 import sys, re
-from data import common
+from .data import common
 
 def pdbCentermass(pdb,write_coord=False,include_hetatm=False,include_mass=True):
     """
@@ -73,15 +78,15 @@ def pdbCentermass(pdb,write_coord=False,include_hetatm=False,include_mass=True):
         try:
             masses.append(common.ATOM_WEIGHTS[atom_type])
         except:
-            print "File contains atoms of unknown type (%s)" % atom_type
-            print "Will assign them mass of carbon (12.011 g/mol)"
-            print "To fix, edit ATOM_WEIGHTS dictionary in pdb_data/common.py"
+            print("File contains atoms of unknown type (%s)" % atom_type)
+            print("Will assign them mass of carbon (12.011 g/mol)")
+            print("To fix, edit ATOM_WEIGHTS dictionary in pdb_data/common.py")
             masses.append(12.011)
 
     num_atoms = len(coord)
 
     total_mass = sum(masses)
-    weights = [m/total_mass for m in masses]
+    weights = [old_div(m,total_mass) for m in masses]
     center = [sum([coord[i][j]*weights[i] for i in range(num_atoms)])
               for j in range(3)]
 
@@ -100,7 +105,7 @@ def pdbCentermass(pdb,write_coord=False,include_hetatm=False,include_mass=True):
     center_out = ["%10.4F" % c for c in center]
 
     if warn:
-        print "Warning.  No element entries in file.  Attempting to extract"
-        print "from the atom names.  Not always reliable..."
+        print("Warning.  No element entries in file.  Attempting to extract")
+        print("from the atom names.  Not always reliable...")
 
     return center_out, out

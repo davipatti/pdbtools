@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from builtins import range
 __description__ = \
 """
 pdb_splitnmr.py

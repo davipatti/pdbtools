@@ -4,6 +4,9 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import division
+from builtins import range
+from past.utils import old_div
 __description__ = \
 """
 pdb_moment.py
@@ -72,7 +75,7 @@ def pdbMoment(pdb):
     num_atoms = len(charges)
 
     # Center coordinates on center of mass
-    center = [sum([c[i] for c in coord])/num_atoms for i in range(3)]
+    center = [old_div(sum([c[i] for c in coord]),num_atoms) for i in range(3)]
     coord = [[c[i] - center[i] for i in range(3)] for c in coord]
 
     return calcMoment(charges,coord)

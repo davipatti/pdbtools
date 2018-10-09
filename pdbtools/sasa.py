@@ -4,6 +4,9 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import division
+from __future__ import print_function
+from past.utils import old_div
 __description__ = \
 """
 pdb_sasa.py
@@ -18,7 +21,7 @@ import os, sys, copy, shutil
 
 global standards
 
-class PdbSasaError(StandardError):
+class PdbSasaError(Exception):
     """
     General error class for this module.
     """
@@ -35,7 +38,8 @@ def runNaccess(pdb_file,probe=1.4,z_sample=0.05,vdw_file=None,keep_temp=False):
 
     try:
         os.mkdir(tmp_dir)
-    except OSError, (errno,errstr):
+    except OSError as xxx_todo_changeme:
+        (errno,errstr) = xxx_todo_changeme.args
         if errno == 17:
             pass
         else:
@@ -121,16 +125,16 @@ def pdbSASA(pdb_file,probe_radius=1.4,z_sample=0.05,vdw_file=None,
 
     if standards == None:
         try:
-            print "Reading standards"
+            print("Reading standards")
             standards = readStandards(probe_radius=probe_radius,
                                       z_sample=z_sample,
                                       vdw_file=vdw_file)
         except PdbSasaError:
-            print "Problem with standard calculation.  Only absolute"
-            print "accessibility will be calculated."
+            print("Problem with standard calculation.  Only absolute")
+            print("accessibility will be calculated.")
             standards = {}
 
-    print pdb_file
+    print(pdb_file)
     all_atoms = runNaccess(pdb_file,probe_radius,z_sample,vdw_file,keep_temp)
 
     residues = []
@@ -144,7 +148,7 @@ def pdbSASA(pdb_file,probe_radius=1.4,z_sample=0.05,vdw_file=None,
         absolute = float(atom[13:])
         try:
             absolute_peptide = standards[atom[4:7]][atom[:3]]
-            fractional = "%10.3F" % (absolute/absolute_peptide)
+            fractional = "%10.3F" % (old_div(absolute,absolute_peptide))
         except (KeyError,ZeroDivisionError):
             fractional = "%10s" % "NA"
 

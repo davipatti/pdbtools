@@ -4,6 +4,7 @@
 # This program is distributed under General Public License v. 3.  See the file
 # COPYING for a copy of the license.
 
+from __future__ import print_function
 __description__ = \
 """
 pdb_mutator.py
@@ -16,8 +17,8 @@ __date__ = "070729"
 __description__ = "Mutates a residue in a pdb file"
 
 import sys, time, string, os
-import .atom_renumber
-import .clean
+from . import atom_renumber
+from . import clean
 from .helper import container
 from .data.common import *
 
@@ -89,7 +90,7 @@ def pdbMutator(pdb,residue,mutation,chain=None,run_charmm=True):
 
     # Add missing atoms using CHARMM
     if run_charmm:
-        print log_fmt % "Adding mutated side chain using CHARMM",
+        print(log_fmt % "Adding mutated side chain using CHARMM", end=' ')
         seqres = [l for l in header if l[0:6] == "SEQRES"]
         coord = pdb_clean.addMissingAtoms(coord,seqres)
         log.append(log_fmt % "Mutated sidechain built with CHARMM")
@@ -97,12 +98,12 @@ def pdbMutator(pdb,residue,mutation,chain=None,run_charmm=True):
     # Renumber atoms from 1
     coord = pdb_atom_renumber.pdbAtomRenumber(coord)
     log.append(log_fmt % "Renumbered atoms from 1")
-    print log[-1],
+    print(log[-1], end=' ')
 
     # Standardize atom-type on far right pdb column
     coord = ["%s           %s  \n" % (c[:66],c[13]) for c in coord]
     log.append(log_fmt % "Atom types were standardized.")
-    print log[-1],
+    print(log[-1], end=' ')
 
     # Final check
     if pdb_clean.pdbCheck(coord):

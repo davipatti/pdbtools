@@ -11,11 +11,14 @@ except:
 
 setup(name='pdbtools',
       version='0.1',
-      description='A set of tools for manipulating and doing calculations on wwPDB macromolecule structure files',
+      description=
+         'A set of tools for manipulating and doing calculations on wwPDB '
+         'macromolecule structure files',
       author='Michael J. Harms',
       author_email='harms@uoregon.edu',
       packages=['pdbtools'],
-      scripts=['scripts/pdb_addH',
+      scripts=[
+         'scripts/pdb_addH',
          'scripts/pdb_atom_renumber',
          'scripts/pdb_bfactor',
          'scripts/pdb_centerasu',
@@ -47,5 +50,5 @@ setup(name='pdbtools',
          'scripts/pdb_torsion',
          'scripts/pdb_watercontact'
       ],
-      #install_requires=[],
+      install_requires=['future'],
       zip_safe=False)
